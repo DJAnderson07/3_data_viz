@@ -498,6 +498,11 @@ strong {
 <ul>
 <li><a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf</a></li>
 </ul></li>
+<li><p>R Graphics Cookbook</p>
+
+<ul>
+<li><a href="http://www.cookbook-r.com/Graphs/">http://www.cookbook-r.com/Graphs/</a></li>
+</ul></li>
 </ul>
 
   </article>
@@ -803,7 +808,7 @@ ggplot(mpg, aes(x = displ, y = hwy)) + geom_smooth()
   </hgroup>
   <article data-timings="">
     <ul>
-<li>Load (install first, if necessary) the <em>ggplot2</em> package. </li>
+<li>Load the <em>ggplot2</em> package. </li>
 <li>Load the diamonds dataset with <code>data(diamonds)</code></li>
 <li>Set and store the data and aesthetics, in an object <code>p</code>, using the following code</li>
 </ul>
@@ -814,7 +819,7 @@ p &lt;- ggplot(diamonds, aes(carat, price))
 
 <ul>
 <li>Print <code>p</code>. What do you see?</li>
-<li>Explore different geoms, with <code>p + geom_XXX()</code>. For example, a basic scatterplot could be produced with</li>
+<li>Explore different geoms, with <code>p + geom_XXX()</code>(<code>geom_hex()</code> requires the <em>hexbin</em> package). For example, a basic scatterplot could be produced with</li>
 </ul>
 
 <pre><code class="r">p + geom_point()
@@ -1165,7 +1170,7 @@ bp + geom_boxplot()
     <h2>Control the amount of jittering</h2>
   </hgroup>
   <article data-timings="">
-    <pre><code class="r">bp + geom_jitter(width = 0.3)
+    <pre><code class="r">bp + geom_jitter(width = 0.3, height = 0)
 </code></pre>
 
 <p><img src="assets/fig/jitter-1.png" alt="plot of chunk jitter"></p>
@@ -1179,7 +1184,7 @@ bp + geom_boxplot()
     <h2>Useful together</h2>
   </hgroup>
   <article data-timings="">
-    <pre><code class="r">bp + geom_boxplot() + geom_jitter(width = 0.3)
+    <pre><code class="r">bp + geom_boxplot() + geom_jitter(width = 0.3, height = 0)
 </code></pre>
 
 <p><img src="assets/fig/boxplotJitter-1.png" alt="plot of chunk boxplotJitter"></p>
@@ -1202,7 +1207,21 @@ bp + geom_boxplot()
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="segue" id="slide-49" style="background:;">
+<slide class="" id="slide-49" style="background:;">
+  <hgroup>
+    <h2>And can also be combined with data</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">bp + geom_violin() + geom_jitter(width = 0.3, height = 0)
+</code></pre>
+
+<p><img src="assets/fig/violin_data-1.png" alt="plot of chunk violin_data"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue" id="slide-50" style="background:;">
   <hgroup>
     <h1>Faceting</h1>
   </hgroup>
@@ -1212,7 +1231,7 @@ bp + geom_boxplot()
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-50" style="background:;">
+<slide class="" id="slide-51" style="background:;">
   <hgroup>
     <h2>Produce separate plots according to a specific variable</h2>
   </hgroup>
@@ -1233,7 +1252,7 @@ hwy + geom_point() + facet_wrap(~class)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-51" style="background:;">
+<slide class="" id="slide-52" style="background:;">
   <hgroup>
     <h2>Add a linear function to each plot</h2>
   </hgroup>
@@ -1248,7 +1267,7 @@ hwy + geom_point() + geom_smooth(method = &quot;lm&quot;) + facet_wrap(~class)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-52" style="background:;">
+<slide class="" id="slide-53" style="background:;">
   <hgroup>
     <h2>Example with growth modeling</h2>
   </hgroup>
@@ -1281,7 +1300,7 @@ head(d, n = 15)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-53" style="background:;">
+<slide class="" id="slide-54" style="background:;">
   <hgroup>
     <h2>Random sampling</h2>
   </hgroup>
@@ -1308,7 +1327,7 @@ head(samp1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-54" style="background:;">
+<slide class="" id="slide-55" style="background:;">
   <hgroup>
     <h2>Sample 1</h2>
   </hgroup>
@@ -1324,7 +1343,7 @@ head(samp1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-55" style="background:;">
+<slide class="" id="slide-56" style="background:;">
   <hgroup>
     <h2>Sample 2</h2>
   </hgroup>
@@ -1340,7 +1359,7 @@ head(samp1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-56" style="background:;">
+<slide class="" id="slide-57" style="background:;">
   <hgroup>
     <h2>Sample 3</h2>
   </hgroup>
@@ -1356,7 +1375,7 @@ head(samp1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-57" style="background:;">
+<slide class="" id="slide-58" style="background:;">
   <hgroup>
     <h2>Alternative: Connect the dots</h2>
   </hgroup>
@@ -1373,7 +1392,7 @@ head(samp1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-58" style="background:;">
+<slide class="" id="slide-59" style="background:;">
   <article data-timings="">
     <p>Or, put all lines in a single plot</p>
 
@@ -1387,7 +1406,7 @@ head(samp1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-59" style="background:;">
+<slide class="" id="slide-60" style="background:;">
   <hgroup>
     <h2>What happens if you forget to specify the group?</h2>
   </hgroup>
@@ -1402,7 +1421,7 @@ head(samp1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-60" style="background:;">
+<slide class="" id="slide-61" style="background:;">
   <hgroup>
     <h2>How bad is the nonlinearity, really?</h2>
   </hgroup>
@@ -1420,7 +1439,7 @@ head(samp1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-61" style="background:;">
+<slide class="" id="slide-62" style="background:;">
   <article data-timings="">
     <pre><code class="r">ggplot(samp2, aes(Months, RIT)) + 
     geom_point() + geom_smooth(color = &quot;red&quot;, span = 2, se = FALSE) +
@@ -1433,7 +1452,7 @@ head(samp1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-62" style="background:;">
+<slide class="" id="slide-63" style="background:;">
   <article data-timings="">
     <pre><code class="r">ggplot(samp3, aes(Months, RIT)) + 
     geom_point() + geom_smooth(color = &quot;red&quot;, span = 2, se = FALSE) +
@@ -1446,7 +1465,7 @@ head(samp1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-63" style="background:;">
+<slide class="" id="slide-64" style="background:;">
   <hgroup>
     <h2>A few notes</h2>
   </hgroup>
@@ -1477,7 +1496,7 @@ head(samp1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-64" style="background:;">
+<slide class="" id="slide-65" style="background:;">
   <hgroup>
     <h2>Different faceting</h2>
   </hgroup>
@@ -1490,7 +1509,7 @@ head(samp1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-65" style="background:;">
+<slide class="" id="slide-66" style="background:;">
   <hgroup>
     <h2>Options for <code>facet_wrap</code></h2>
   </hgroup>
@@ -1507,7 +1526,7 @@ f + facet_wrap(~class, ncol = 4)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-66" style="background:;">
+<slide class="" id="slide-67" style="background:;">
   <article data-timings="">
     <p>Change the direction plots are produced</p>
 
@@ -1520,7 +1539,7 @@ f + facet_wrap(~class, ncol = 4)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-67" style="background:;">
+<slide class="" id="slide-68" style="background:;">
   <hgroup>
     <h2>Facet Grid</h2>
   </hgroup>
@@ -1536,7 +1555,7 @@ f + facet_wrap(~class, ncol = 4)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-68" style="background:;">
+<slide class="" id="slide-69" style="background:;">
   <article data-timings="">
     <pre><code class="r">f + facet_grid(drv ~ .)
 </code></pre>
@@ -1547,7 +1566,7 @@ f + facet_wrap(~class, ncol = 4)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-69" style="background:;">
+<slide class="" id="slide-70" style="background:;">
   <hgroup>
     <h2>Two variables</h2>
   </hgroup>
@@ -1561,7 +1580,7 @@ f + facet_wrap(~class, ncol = 4)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-70" style="background:;">
+<slide class="" id="slide-71" style="background:;">
   <hgroup>
     <h2>Two variables</h2>
   </hgroup>
@@ -1577,7 +1596,7 @@ f + facet_wrap(~class, ncol = 4)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-71" style="background:;">
+<slide class="" id="slide-72" style="background:;">
   <hgroup>
     <h2>Scales with faceting</h2>
   </hgroup>
@@ -1593,7 +1612,7 @@ f + facet_wrap(~class, ncol = 4)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-72" style="background:;">
+<slide class="" id="slide-73" style="background:;">
   <article data-timings="">
     <p>Free y-axis scale, fixed x</p>
 
@@ -1606,7 +1625,7 @@ f + facet_wrap(~class, ncol = 4)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-73" style="background:;">
+<slide class="" id="slide-74" style="background:;">
   <article data-timings="">
     <p>Free x-axis scale, fixed y</p>
 
@@ -1619,7 +1638,7 @@ f + facet_wrap(~class, ncol = 4)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-74" style="background:;">
+<slide class="" id="slide-75" style="background:;">
   <article data-timings="">
     <p>Change spacing with <code>facet_grid</code></p>
 
@@ -1632,7 +1651,7 @@ f + facet_wrap(~class, ncol = 4)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-75" style="background:;">
+<slide class="" id="slide-76" style="background:;">
   <hgroup>
     <h2>Faceting vs Grouping</h2>
   </hgroup>
@@ -1660,7 +1679,7 @@ f + facet_wrap(~class, ncol = 4)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-76" style="background:;">
+<slide class="" id="slide-77" style="background:;">
   <hgroup>
     <h2>Guided practice</h2>
   </hgroup>
@@ -1691,7 +1710,7 @@ prefer?</li>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-77" style="background:;">
+<slide class="" id="slide-78" style="background:;">
   <article data-timings="">
     <p>Use faceting to view the densities by <em>clarity</em>.</p>
 
@@ -1705,7 +1724,7 @@ base + geom_density() + facet_wrap(~ clarity)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-78" style="background:;">
+<slide class="" id="slide-79" style="background:;">
   <article data-timings="">
     <p>Modify the code to group by <em>clarity</em> and facet by <em>cut</em>.</p>
 
@@ -1719,7 +1738,7 @@ base2 + geom_density() + facet_wrap(~ cut)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-79" style="background:;">
+<slide class="" id="slide-80" style="background:;">
   <article data-timings="">
     <p>Modify the code so the points are colored according to their color.</p>
 
@@ -1732,7 +1751,7 @@ base2 + geom_density() + facet_wrap(~ cut)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-80" style="background:;">
+<slide class="" id="slide-81" style="background:;">
   <article data-timings="">
     <p>Use faceting to produce separate plots for each color.</p>
 
@@ -1745,7 +1764,7 @@ base2 + geom_density() + facet_wrap(~ cut)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="segue" id="slide-81" style="background:;">
+<slide class="segue" id="slide-82" style="background:;">
   <hgroup>
     <h1>Themes</h1>
   </hgroup>
@@ -1755,7 +1774,7 @@ base2 + geom_density() + facet_wrap(~ cut)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-82" style="background:;">
+<slide class="" id="slide-83" style="background:;">
   <hgroup>
     <h2>Overview of themes</h2>
   </hgroup>
@@ -1775,7 +1794,7 @@ base2 + geom_density() + facet_wrap(~ cut)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-83" style="background:;">
+<slide class="" id="slide-84" style="background:;">
   <hgroup>
     <h2>theme_gray (default)</h2>
   </hgroup>
@@ -1790,7 +1809,7 @@ baseP + theme_gray()
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-84" style="background:;">
+<slide class="" id="slide-85" style="background:;">
   <hgroup>
     <h2>theme_bw</h2>
   </hgroup>
@@ -1804,7 +1823,7 @@ baseP + theme_gray()
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-85" style="background:;">
+<slide class="" id="slide-86" style="background:;">
   <hgroup>
     <h2>theme_classic</h2>
   </hgroup>
@@ -1818,7 +1837,7 @@ baseP + theme_gray()
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-86" style="background:;">
+<slide class="" id="slide-87" style="background:;">
   <hgroup>
     <h2>theme_dark</h2>
   </hgroup>
@@ -1832,7 +1851,7 @@ baseP + theme_gray()
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-87" style="background:;">
+<slide class="" id="slide-88" style="background:;">
   <hgroup>
     <h2>theme_minimal</h2>
   </hgroup>
@@ -1846,7 +1865,7 @@ baseP + theme_gray()
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-88" style="background:;">
+<slide class="" id="slide-89" style="background:;">
   <hgroup>
     <h2>Further customization</h2>
   </hgroup>
@@ -1863,7 +1882,7 @@ baseP + theme_gray()
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="segue" id="slide-89" style="background:;">
+<slide class="segue" id="slide-90" style="background:;">
   <hgroup>
     <h1>Exploratory versus model-based plotting</h1>
   </hgroup>
@@ -1873,7 +1892,7 @@ baseP + theme_gray()
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-90" style="background:;">
+<slide class="" id="slide-91" style="background:;">
   <hgroup>
     <h2>Underlying theory</h2>
   </hgroup>
@@ -1888,27 +1907,12 @@ baseP + theme_gray()
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-91" style="background:;">
+<slide class="" id="slide-92" style="background:;">
   <hgroup>
     <h2>Load and tidy SEDA Data</h2>
   </hgroup>
   <article data-timings="">
-    <pre><code class="r">library(tidyverse)
-d &lt;- read_csv(&quot;./course_materials/data/district means national-referenced by year grade subject (long file).csv&quot;)
-td &lt;- d %&gt;% 
-  gather(mean_link_ela:se_link_math, 
-    key = &quot;key&quot;,
-    value = &quot;score&quot;) %&gt;% 
-  separate(key, c(&quot;variable&quot;, &quot;discard&quot;, &quot;subject&quot;), sep = &quot;_&quot;) %&gt;% 
-  mutate(time = grade - 3,
-         leaname = as.factor(leaname),
-         stateabb = as.factor(stateabb)) %&gt;% 
-  spread(variable, score) %&gt;% 
-  select(-discard)
-kable(head(td))
-</code></pre>
-
-<table><thead>
+    <table><thead>
 <tr>
 <th align="right">leaid</th>
 <th align="left">leaname</th>
@@ -2000,7 +2004,7 @@ kable(head(td))
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-92" style="background:;">
+<slide class="" id="slide-93" style="background:;">
   <hgroup>
     <h2><code>lm</code>-based plot</h2>
   </hgroup>
@@ -2016,7 +2020,7 @@ kable(head(td))
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-93" style="background:;">
+<slide class="" id="slide-94" style="background:;">
   <hgroup>
     <h2><code>lm</code>-based plot (continued)</h2>
   </hgroup>
@@ -2046,7 +2050,7 @@ kable(head(td))
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-94" style="background:;">
+<slide class="" id="slide-95" style="background:;">
   <hgroup>
     <h2>Model-output plotting</h2>
   </hgroup>
@@ -2056,26 +2060,44 @@ kable(head(td))
 <pre><code class="r">m &lt;- lm(mean ~ stateabb, data = td)
 library(broom)
 tidy_m &lt;- tidy(m, conf.int = TRUE)
+head(tidy_m)
+</code></pre>
 
-ggplot(tidy_m[-1, ], aes(estimate, term, color = term)) + # drop intercept
-    geom_point() +
-    geom_errorbarh(aes(xmin = conf.low, xmax = conf.high)) +
-    geom_vline(xintercept = 0)
+<pre><code>##          term     estimate std.error   statistic       p.value   conf.low
+## 1 (Intercept) 233.38152609 0.5341304 436.9373381  0.000000e+00 232.334648
+## 2  stateabbAL   3.13844765 0.6010544   5.2215700  1.774676e-07   1.960400
+## 3  stateabbAR   3.57728925 0.5698254   6.2778695  3.434620e-10   2.460450
+## 4  stateabbAZ   0.09975552 0.5951292   0.1676199  8.668823e-01  -1.066678
+## 5  stateabbCA  -2.71381607 0.5493784  -4.9397938  7.822482e-07  -3.790580
+## 6  stateabbCO  17.70583750 0.6075348  29.1437401 1.328560e-186  16.515089
+##    conf.high
+## 1 234.428404
+## 2   4.316495
+## 3   4.694129
+## 4   1.266190
+## 5  -1.637052
+## 6  18.896586
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-95" style="background:;">
+<slide class="" id="slide-96" style="background:;">
   <article data-timings="">
-    <p><img src="assets/fig/point_est_eval-1.png" alt="plot of chunk point_est_eval"></p>
+    <pre><code class="r">ggplot(tidy_m[-1, ], aes(estimate, term, color = term)) +
+    geom_point() +
+    geom_errorbarh(aes(xmin = conf.low, xmax = conf.high)) +
+    geom_vline(xintercept = 0)
+</code></pre>
+
+<p><img src="assets/fig/coef_plot-1.png" alt="plot of chunk coef_plot"></p>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="segue" id="slide-96" style="background:;">
+<slide class="segue" id="slide-97" style="background:;">
   <hgroup>
     <h1>Fitting and visualizing multiple models (advanced)</h1>
   </hgroup>
@@ -2085,7 +2107,7 @@ ggplot(tidy_m[-1, ], aes(estimate, term, color = term)) + # drop intercept
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-97" style="background:;">
+<slide class="" id="slide-98" style="background:;">
   <hgroup>
     <h2>Fitting and plotting multiple models</h2>
   </hgroup>
@@ -2124,7 +2146,7 @@ by_state
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-98" style="background:;">
+<slide class="" id="slide-99" style="background:;">
   <hgroup>
     <h2>Fit multiple models</h2>
   </hgroup>
@@ -2154,7 +2176,7 @@ by_state
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-99" style="background:;">
+<slide class="" id="slide-100" style="background:;">
   <article data-timings="">
     <pre><code class="r">by_state &lt;- by_state %&gt;% 
     mutate(r2 = map(model, summary) %&gt;% 
@@ -2182,7 +2204,7 @@ by_state
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-100" style="background:;">
+<slide class="" id="slide-101" style="background:;">
   <hgroup>
     <h2>Plot results</h2>
   </hgroup>
@@ -2490,79 +2512,79 @@ by_state
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=49 title='Faceting'>
+        data-slide=49 title='And can also be combined with data'>
          49
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=50 title='Produce separate plots according to a specific variable'>
+        data-slide=50 title='Faceting'>
          50
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=51 title='Add a linear function to each plot'>
+        data-slide=51 title='Produce separate plots according to a specific variable'>
          51
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=52 title='Example with growth modeling'>
+        data-slide=52 title='Add a linear function to each plot'>
          52
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=53 title='Random sampling'>
+        data-slide=53 title='Example with growth modeling'>
          53
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=54 title='Sample 1'>
+        data-slide=54 title='Random sampling'>
          54
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=55 title='Sample 2'>
+        data-slide=55 title='Sample 1'>
          55
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=56 title='Sample 3'>
+        data-slide=56 title='Sample 2'>
          56
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=57 title='Alternative: Connect the dots'>
+        data-slide=57 title='Sample 3'>
          57
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=58 title='NA'>
+        data-slide=58 title='Alternative: Connect the dots'>
          58
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=59 title='What happens if you forget to specify the group?'>
+        data-slide=59 title='NA'>
          59
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=60 title='How bad is the nonlinearity, really?'>
+        data-slide=60 title='What happens if you forget to specify the group?'>
          60
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=61 title='NA'>
+        data-slide=61 title='How bad is the nonlinearity, really?'>
          61
       </a>
     </li>
@@ -2574,43 +2596,43 @@ by_state
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=63 title='A few notes'>
+        data-slide=63 title='NA'>
          63
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=64 title='Different faceting'>
+        data-slide=64 title='A few notes'>
          64
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=65 title='Options for <code>facet_wrap</code>'>
+        data-slide=65 title='Different faceting'>
          65
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=66 title='NA'>
+        data-slide=66 title='Options for <code>facet_wrap</code>'>
          66
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=67 title='Facet Grid'>
+        data-slide=67 title='NA'>
          67
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=68 title='NA'>
+        data-slide=68 title='Facet Grid'>
          68
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=69 title='Two variables'>
+        data-slide=69 title='NA'>
          69
       </a>
     </li>
@@ -2622,13 +2644,13 @@ by_state
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=71 title='Scales with faceting'>
+        data-slide=71 title='Two variables'>
          71
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=72 title='NA'>
+        data-slide=72 title='Scales with faceting'>
          72
       </a>
     </li>
@@ -2646,19 +2668,19 @@ by_state
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=75 title='Faceting vs Grouping'>
+        data-slide=75 title='NA'>
          75
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=76 title='Guided practice'>
+        data-slide=76 title='Faceting vs Grouping'>
          76
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=77 title='NA'>
+        data-slide=77 title='Guided practice'>
          77
       </a>
     </li>
@@ -2682,122 +2704,128 @@ by_state
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=81 title='Themes'>
+        data-slide=81 title='NA'>
          81
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=82 title='Overview of themes'>
+        data-slide=82 title='Themes'>
          82
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=83 title='theme_gray (default)'>
+        data-slide=83 title='Overview of themes'>
          83
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=84 title='theme_bw'>
+        data-slide=84 title='theme_gray (default)'>
          84
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=85 title='theme_classic'>
+        data-slide=85 title='theme_bw'>
          85
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=86 title='theme_dark'>
+        data-slide=86 title='theme_classic'>
          86
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=87 title='theme_minimal'>
+        data-slide=87 title='theme_dark'>
          87
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=88 title='Further customization'>
+        data-slide=88 title='theme_minimal'>
          88
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=89 title='Exploratory versus model-based plotting'>
+        data-slide=89 title='Further customization'>
          89
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=90 title='Underlying theory'>
+        data-slide=90 title='Exploratory versus model-based plotting'>
          90
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=91 title='Load and tidy SEDA Data'>
+        data-slide=91 title='Underlying theory'>
          91
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=92 title='<code>lm</code>-based plot'>
+        data-slide=92 title='Load and tidy SEDA Data'>
          92
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=93 title='<code>lm</code>-based plot (continued)'>
+        data-slide=93 title='<code>lm</code>-based plot'>
          93
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=94 title='Model-output plotting'>
+        data-slide=94 title='<code>lm</code>-based plot (continued)'>
          94
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=95 title='NA'>
+        data-slide=95 title='Model-output plotting'>
          95
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=96 title='Fitting and visualizing multiple models (advanced)'>
+        data-slide=96 title='NA'>
          96
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=97 title='Fitting and plotting multiple models'>
+        data-slide=97 title='Fitting and visualizing multiple models (advanced)'>
          97
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=98 title='Fit multiple models'>
+        data-slide=98 title='Fitting and plotting multiple models'>
          98
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=99 title='NA'>
+        data-slide=99 title='Fit multiple models'>
          99
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=100 title='Plot results'>
+        data-slide=100 title='NA'>
          100
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=101 title='Plot results'>
+         101
       </a>
     </li>
   </ul>

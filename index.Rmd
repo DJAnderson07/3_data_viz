@@ -133,6 +133,9 @@ The *ggplot2* package is one of the most popular R packages. There are a plethor
 * RStudio cheat sheet can also be helpful
 	+ https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf
 
+* R Graphics Cookbook
+	+ http://www.cookbook-r.com/Graphs/
+
 
 ---- 
 ## Components
@@ -276,7 +279,7 @@ knitr::kable(data.frame(Geoms = geoms2cont, Description = desc2cont,
 
 ----
 ## Guided practice
-* Load (install first, if necessary) the *ggplot2* package. 
+* Load the *ggplot2* package. 
 * Load the diamonds dataset with `data(diamonds)`
 * Set and store the data and aesthetics, in an object `p`, using the following code
 
@@ -285,7 +288,7 @@ data(diamonds)
 p <- ggplot(diamonds, aes(carat, price))
 ```
 * Print `p`. What do you see?
-* Explore different geoms, with `p + geom_XXX()`. For example, a basic scatterplot could be produced with
+* Explore different geoms, with `p + geom_XXX()`(`geom_hex()` requires the *hexbin* package). For example, a basic scatterplot could be produced with
 
 ```{r guidedp1_2, eval = FALSE}
 p + geom_point()
@@ -455,14 +458,14 @@ bp + geom_jitter()
 ## Control the amount of jittering
 
 ```{r jitter}
-bp + geom_jitter(width = 0.3)
+bp + geom_jitter(width = 0.3, height = 0)
 ```
 
 ----
 ## Useful together
 
 ```{r boxplotJitter}
-bp + geom_boxplot() + geom_jitter(width = 0.3)
+bp + geom_boxplot() + geom_jitter(width = 0.3, height = 0)
 ```
 
 ----
@@ -470,6 +473,13 @@ bp + geom_boxplot() + geom_jitter(width = 0.3)
 
 ```{r violin}
 bp + geom_violin()
+```
+
+----
+## And can also be combined with data
+
+```{r violin_data}
+bp + geom_violin() + geom_jitter(width = 0.3, height = 0)
 ```
 
 --- .segue
@@ -825,7 +835,7 @@ baseP + theme_minimal()
 ----
 ## Load and tidy SEDA Data
 
-```{r load_seda}
+```{r load_seda, echo = FALSE}
 library(tidyverse)
 d <- read_csv("./course_materials/data/district means national-referenced by year grade subject (long file).csv")
 td <- d %>% 
@@ -876,24 +886,16 @@ ggplot(td, aes(time, mean)) +
 ## Model-output plotting
 While the previous plots are basically model-based plots, they can also be  exploratory, and often we want to plot results from the model. As mentioned last time, the *broom* package can help.
 
-```{r point_est_echo, eval = FALSE}
+```{r point_est}
 m <- lm(mean ~ stateabb, data = td)
 library(broom)
 tidy_m <- tidy(m, conf.int = TRUE)
-
-ggplot(tidy_m[-1, ], aes(estimate, term, color = term)) + # drop intercept
-	geom_point() +
-  	geom_errorbarh(aes(xmin = conf.low, xmax = conf.high)) +
-    geom_vline(xintercept = 0)
+head(tidy_m)
 ```
 
 ----
 
-```{r point_est_eval, echo = FALSE}
-m <- lm(mean ~ stateabb, data = td)
-library(broom)
-tidy_m <- tidy(m, conf.int = TRUE)
-
+```{r coef_plot, fig.height = 6, fig.width = 13}
 ggplot(tidy_m[-1, ], aes(estimate, term, color = term)) +
 	geom_point() +
   	geom_errorbarh(aes(xmin = conf.low, xmax = conf.high)) +
@@ -937,6 +939,6 @@ by_state
 ----
 ## Plot results
 
-```{r plot_r2}
+```{r plot_r2, fig.height = 7, fig.width = 13}
 ggplot(by_state, aes(stateabb, r2)) + geom_point()
 ```

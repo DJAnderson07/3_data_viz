@@ -126,6 +126,9 @@ The *ggplot2* package is one of the most popular R packages. There are a plethor
 * RStudio cheat sheet can also be helpful
 	+ https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf
 
+* R Graphics Cookbook
+	+ http://www.cookbook-r.com/Graphs/
+
 
 ---- 
 ## Components
@@ -299,7 +302,7 @@ ggplot(mpg, aes(x = displ, y = hwy)) + geom_point(color = "purple") +
 
 ----
 ## Guided practice
-* Load (install first, if necessary) the *ggplot2* package. 
+* Load the *ggplot2* package. 
 * Load the diamonds dataset with `data(diamonds)`
 * Set and store the data and aesthetics, in an object `p`, using the following code
 
@@ -309,7 +312,7 @@ data(diamonds)
 p <- ggplot(diamonds, aes(carat, price))
 ```
 * Print `p`. What do you see?
-* Explore different geoms, with `p + geom_XXX()`. For example, a basic scatterplot could be produced with
+* Explore different geoms, with `p + geom_XXX()`(`geom_hex()` requires the *hexbin* package). For example, a basic scatterplot could be produced with
 
 
 ```r
@@ -535,7 +538,7 @@ bp + geom_jitter()
 
 
 ```r
-bp + geom_jitter(width = 0.3)
+bp + geom_jitter(width = 0.3, height = 0)
 ```
 
 ![plot of chunk jitter](assets/fig/jitter-1.png)
@@ -545,7 +548,7 @@ bp + geom_jitter(width = 0.3)
 
 
 ```r
-bp + geom_boxplot() + geom_jitter(width = 0.3)
+bp + geom_boxplot() + geom_jitter(width = 0.3, height = 0)
 ```
 
 ![plot of chunk boxplotJitter](assets/fig/boxplotJitter-1.png)
@@ -559,6 +562,16 @@ bp + geom_violin()
 ```
 
 ![plot of chunk violin](assets/fig/violin-1.png)
+
+----
+## And can also be combined with data
+
+
+```r
+bp + geom_violin() + geom_jitter(width = 0.3, height = 0)
+```
+
+![plot of chunk violin_data](assets/fig/violin_data-1.png)
 
 --- .segue
 # Faceting
@@ -1052,24 +1065,6 @@ baseP + theme_minimal()
 ## Load and tidy SEDA Data
 
 
-```r
-library(tidyverse)
-d <- read_csv("./course_materials/data/district means national-referenced by year grade subject (long file).csv")
-td <- d %>% 
-  gather(mean_link_ela:se_link_math, 
-    key = "key",
-    value = "score") %>% 
-  separate(key, c("variable", "discard", "subject"), sep = "_") %>% 
-  mutate(time = grade - 3,
-  		 leaname = as.factor(leaname),
-  		 stateabb = as.factor(stateabb)) %>% 
-  spread(variable, score) %>% 
-  select(-discard)
-kable(head(td))
-```
-
-
-
 |  leaid|leaname                | fips|stateabb | year| grade|subject | time|     mean|       se|
 |------:|:----------------------|----:|:--------|----:|-----:|:-------|----:|--------:|--------:|
 | 100002|ALABAMA YOUTH SERVICES |    1|AL       | 2009|     8|ela     |    5| 210.5474| 6.723581|
@@ -1128,16 +1123,37 @@ While the previous plots are basically model-based plots, they can also be  expl
 m <- lm(mean ~ stateabb, data = td)
 library(broom)
 tidy_m <- tidy(m, conf.int = TRUE)
+head(tidy_m)
+```
 
-ggplot(tidy_m[-1, ], aes(estimate, term, color = term)) + # drop intercept
+```
+##          term     estimate std.error   statistic       p.value   conf.low
+## 1 (Intercept) 233.38152609 0.5341304 436.9373381  0.000000e+00 232.334648
+## 2  stateabbAL   3.13844765 0.6010544   5.2215700  1.774676e-07   1.960400
+## 3  stateabbAR   3.57728925 0.5698254   6.2778695  3.434620e-10   2.460450
+## 4  stateabbAZ   0.09975552 0.5951292   0.1676199  8.668823e-01  -1.066678
+## 5  stateabbCA  -2.71381607 0.5493784  -4.9397938  7.822482e-07  -3.790580
+## 6  stateabbCO  17.70583750 0.6075348  29.1437401 1.328560e-186  16.515089
+##    conf.high
+## 1 234.428404
+## 2   4.316495
+## 3   4.694129
+## 4   1.266190
+## 5  -1.637052
+## 6  18.896586
+```
+
+----
+
+
+```r
+ggplot(tidy_m[-1, ], aes(estimate, term, color = term)) +
 	geom_point() +
   	geom_errorbarh(aes(xmin = conf.low, xmax = conf.high)) +
     geom_vline(xintercept = 0)
 ```
 
-----
-
-![plot of chunk point_est_eval](assets/fig/point_est_eval-1.png)
+![plot of chunk coef_plot](assets/fig/coef_plot-1.png)
 
 ---- .segue
 # Fitting and visualizing multiple models (advanced)
